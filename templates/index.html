@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Mental Health Support - Here for You</title>
+    
+    <!-- Bootstrap CSS for responsive design -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --warm-white: #fefefe;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-light: #e2e8f0;
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--warm-white);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chat-container {
+            display: flex;
+            gap: 24px;
+            flex: 1;
+            min-height: 600px;
+        }
+
+        .chat-main {
+            flex: 2;
+            background: var(--warm-white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 500px;
+            background: #fafbfc;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
+        .user-message .message-content {
+            background: var(--primary-color);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 20px 20px 4px 20px;
+            display: inline-block;
+            max-width: 80%;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .therapist-message .message-content {
+            background: var(--warm-white);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 20px 20px 20px 4px;
+            display: inline-block;
+            max-width: 80%;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .message-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .emotion-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 4px;
+        }
+
+        .emotion-anxiety { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+        .emotion-sadness { background: rgba(99, 102, 241, 0.1); color: var(--primary-color); }
+        .emotion-anger { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); }
+        .emotion-joy { background: rgba(16, 185, 129, 0.1); color: var(--success-color); }
+        .emotion-neutral { background: rgba(100, 116, 139, 0.1); color: var(--text-secondary); }
+
+        .crisis-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--danger-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .crisis-alert h5 {
+            color: var(--danger-color);
+            margin-bottom: 12px;
+        }
+
+        .input-area {
+            padding: 24px;
+            border-top: 1px solid var(--border-light);
+            background: var(--warm-white);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 60px;
+            max-height: 120px;
+            transition: border-color 0.2s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border-light);
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .panel {
+            background: var(--warm-white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+        }
+
+        .panel h3 {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .resource-item {
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--light-bg);
+            margin-bottom: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .resource-item h5 {
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .resource-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .breathing-exercise {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .breathing-circle {
+            width: 120px;
+            height: 120px;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .breathing-circle.active {
+            transform: scale(1.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: loadingDot 1.4s infinite;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loadingDot {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .voice-btn {
+            background: var(--accent-color);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .voice-btn:hover {
+            background: var(--success-color);
+            transform: scale(1.05);
+        }
+
+        .voice-btn.recording {
+            background: var(--danger-color);
+            animation: pulse 1s infinite;
+        }
+
+        .accessibility-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .accessibility-btn {
+            background: var(--warm-white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .accessibility-btn:hover {
+            background: var(--light-bg);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .chat-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .main-container {
+                padding: 16px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* High contrast mode */
+        .high-contrast {
+            filter: contrast(150%);
+        }
+
+        /* Large text mode */
+        .large-text {
+            font-size: 1.2em;
+        }
+
+        .large-text .header h1 {
+            font-size: 2.4rem;
+        }
+
+        /* Focus indicators for accessibility */
+        button:focus,
+        textarea:focus,
+        .btn:focus {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls">
+        <button class="accessibility-btn" onclick="toggleHighContrast()" title="Toggle High Contrast">
+            <i class="fas fa-adjust"></i>
+        </button>
+        <button class="accessibility-btn" onclick="toggleLargeText()" title="Toggle Large Text">
+            <i class="fas fa-text-height"></i>
+        </button>
+    </div>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-heart"></i> Virtual Mental Health Support</h1>
+            <p>A safe, confidential space for emotional support and guidance. You are not alone.</p>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-container">
+            <!-- Chat Interface -->
+            <div class="chat-main">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message therapist-message">
+                        <div class="message-content">
+                            <p>Hello, and welcome. I'm here to provide you with a safe, confidential space to share your thoughts and feelings. Whatever you're going through, please know that your feelings are valid and you don't have to face this alone.</p>
+                            <p>How are you feeling today? Take your time - there's no pressure to share more than you're comfortable with.</p>
+                        </div>
+                        <div class="message-meta">
+                            <span class="emotion-indicator emotion-neutral">Supportive</span>
+                            <small>Virtual Therapist • Just now</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="input-group">
+                        <textarea 
+                            id="messageInput" 
+                            class="message-input" 
+                            placeholder="Share what's on your mind... You're in a safe space."
+                            rows="3"
+                            maxlength="1000"></textarea>
+                        <div class="voice-controls">
+                            <button class="voice-btn" id="recordBtn" title="Record voice message" onclick="toggleRecording()">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button class="voice-btn" id="playBtn" title="Play response" onclick="playLastResponse()" style="display: none;">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            <i class="fas fa-lock"></i> Your conversation is private and confidential
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Crisis Resources -->
+                <div class="panel" id="crisisPanel" style="display: none;">
+                    <h3><i class="fas fa-phone"></i> Crisis Support</h3>
+                    <div class="crisis-alert">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Immediate Help Available</h5>
+                        <p>If you're in crisis or having thoughts of self-harm, please reach out for immediate support.</p>
+                    </div>
+                    <div id="crisisResources"></div>
+                </div>
+
+                <!-- Emotional Support Resources -->
+                <div class="panel">
+                    <h3><i class="fas fa-hands-helping"></i> Support Resources</h3>
+                    <div class="resource-item">
+                        <h5>988 Suicide & Crisis Lifeline</h5>
+                        <p><strong>Call: 988</strong><br>24/7 free and confidential support</p>
+                    </div>
+                    <div class="resource-item">
+                        <h5>Crisis Text Line</h5>
+                        <p><strong>Text HOME to 741741</strong><br>24/7 crisis support via text</p>
+                    </div>
+                    <div class="resource-item">
+                        <h5>NAMI Support</h5>
+                        <p><strong>1-800-950-NAMI</strong><br>Mental health information and support</p>
+                    </div>
+                </div>
+
+                <!-- Breathing Exercise -->
+                <div class="panel">
+                    <h3><i class="fas fa-leaf"></i> Breathing Exercise</h3>
+                    <div class="breathing-exercise">
+                        <div class="breathing-circle" id="breathingCircle">
+                            Breathe
+                        </div>
+                        <button class="btn btn-secondary" onclick="startBreathingExercise()">
+                            <i class="fas fa-play"></i> Start Exercise
+                        </button>
+                        <div id="breathingInstructions" class="mt-3" style="display: none;">
+                            <p id="breathingText">Get ready...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coping Strategies -->
+                <div class="panel">
+                    <h3><i class="fas fa-toolbox"></i> Coping Strategies</h3>
+                    <div id="copingStrategies">
+                        <div class="resource-item">
+                            <h5>Grounding Technique</h5>
+                            <p>Notice 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste</p>
+                        </div>
+                        <div class="resource-item">
+                            <h5>Deep Breathing</h5>
+                            <p>Breathe in for 4 counts, hold for 4, exhale for 6</p>
+                        </div>
+                        <div class="resource-item">
+                            <h5>Self-Compassion</h5>
+                            <p>Speak to yourself as you would to a dear friend</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Socket.IO for real-time communication -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let socket;
+        let sessionId = localStorage.getItem('sessionId') || generateSessionId();
+        let isRecording = false;
+        let mediaRecorder;
+        let audioChunks = [];
+        let lastResponse = '';
+        let breathingInterval;
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSocket();
+            setupEventListeners();
+            localStorage.setItem('sessionId', sessionId);
+        });
+
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+
+        function initializeSocket() {
+            socket = io();
+            
+            socket.on('connect', function() {
+                console.log('Connected to server');
+            });
+
+            socket.on('response', function(data) {
+                displayTherapistMessage(data);
+                hideLoading();
+            });
+
+            socket.on('error', function(data) {
+                console.error('Error:', data);
+                hideLoading();
+                alert('An error occurred. Please try again.');
+            });
+        }
+
+        function setupEventListeners() {
+            // Enter key to send message
+            document.getElementById('messageInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Auto-resize textarea
+            document.getElementById('messageInput').addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        }
+
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+
+            // Display user message
+            displayUserMessage(message);
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Show loading
+            showLoading();
+
+            try {
+                // Send to server via REST API
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: sessionId
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayTherapistMessage(data);
+                    handleSpecialResponses(data);
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                displayErrorMessage();
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function displayUserMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user-message';
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${escapeHtml(message)}</p>
+                </div>
+                <div class="message-meta">
+                    <small>You • ${new Date().toLocaleTimeString()}</small>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function displayTherapistMessage(data) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message therapist-message';
+            
+            const emotionClass = getEmotionClass(data.emotion_detected);
+            const emotionDisplay = capitalizeFirst(data.emotion_detected);
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${escapeHtml(data.empathetic_response)}</p>
+                    ${data.suggested_activities ? displaySuggestedActivities(data.suggested_activities) : ''}
+                </div>
+                <div class="message-meta">
+                    <span class="emotion-indicator ${emotionClass}">${emotionDisplay}</span>
+                    <small>Virtual Therapist • ${new Date().toLocaleTimeString()}</small>
+                    ${data.sentiment_score !== undefined ? `<small> • Sentiment: ${data.sentiment_score.toFixed(2)}</small>` : ''}
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            lastResponse = data.empathetic_response;
+            
+            // Show voice play button if response is available
+            document.getElementById('playBtn').style.display = 'inline-flex';
+            
+            scrollToBottom();
+        }
+
+        function displaySuggestedActivities(activities) {
+            if (!activities || activities.length === 0) return '';
+            
+            let html = '<div class="mt-3"><strong>Suggested activities:</strong><ul>';
+            activities.forEach(activity => {
+                html += `<li>${escapeHtml(activity)}</li>`;
+            });
+            html += '</ul></div>';
+            return html;
+        }
+
+        function handleSpecialResponses(data) {
+            // Handle crisis detection
+            if (data.crisis_detected) {
+                showCrisisPanel(data.emergency_resources);
+            }
+
+            // Update coping strategies if provided
+            if (data.breathing_exercise) {
+                updateBreathingExercise(data.breathing_exercise);
+            }
+        }
+
+        function showCrisisPanel(resources) {
+            const crisisPanel = document.getElementById('crisisPanel');
+            const resourcesDiv = document.getElementById('crisisResources');
+            
+            if (resources && resources.length > 0) {
+                let html = '';
+                resources.forEach(resource => {
+                    html += `
+                        <div class="resource-item">
+                            <h5>${escapeHtml(resource.name)}</h5>
+                            <p>
+                                ${resource.number ? `<strong>${escapeHtml(resource.number)}</strong><br>` : ''}
+                                ${escapeHtml(resource.description)}
+                                ${resource.available ? `<br><em>Available: ${escapeHtml(resource.available)}</em>` : ''}
+                            </p>
+                        </div>
+                    `;
+                });
+                resourcesDiv.innerHTML = html;
+            }
+            
+            crisisPanel.style.display = 'block';
+            crisisPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateBreathingExercise(exercise) {
+            // Update breathing exercise with new instructions if provided
+            console.log('Breathing exercise available:', exercise.name);
+        }
+
+        function showLoading() {
+            const chatMessages = document.getElementById('chatMessages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message therapist-message loading-message';
+            loadingDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="loading">
+                        <span>Thinking</span>
+                        <div class="loading-dots">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(loadingDiv);
+            scrollToBottom();
+        }
+
+        function hideLoading() {
+            const loadingMessages = document.querySelectorAll('.loading-message');
+            loadingMessages.forEach(msg => msg.remove());
+        }
+
+        function displayErrorMessage() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message therapist-message';
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>I'm sorry, I'm having trouble responding right now. Please try again in a moment, or if this is an emergency, please contact 988 or emergency services.</p>
+                </div>
+                <div class="message-meta">
+                    <span class="emotion-indicator emotion-neutral">System</span>
+                    <small>Virtual Therapist • ${new Date().toLocaleTimeString()}</small>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // Voice functionality
+        async function toggleRecording() {
+            if (!isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = function(event) {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = function() {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    sendAudioMessage(audioBlob);
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+                
+                const recordBtn = document.getElementById('recordBtn');
+                recordBtn.classList.add('recording');
+                recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                recordBtn.title = 'Stop recording';
+                
+            } catch (error) {
+                console.error('Error starting recording:', error);
+                alert('Unable to access microphone. Please check permissions.');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                isRecording = false;
+                
+                const recordBtn = document.getElementById('recordBtn');
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                recordBtn.title = 'Record voice message';
+            }
+        }
+
+        async function sendAudioMessage(audioBlob) {
+            showLoading();
+            
+            try {
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.wav');
+
+                const response = await fetch('/api/voice/process', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.text) {
+                    document.getElementById('messageInput').value = data.text;
+                    sendMessage();
+                } else {
+                    throw new Error('Failed to process audio');
+                }
+            } catch (error) {
+                console.error('Error processing audio:', error);
+                hideLoading();
+                alert('Unable to process voice input. Please try typing your message.');
+            }
+        }
+
+        async function playLastResponse() {
+            if (!lastResponse) return;
+
+            try {
+                const response = await fetch('/api/voice/synthesize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: lastResponse })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.audio_data) {
+                    const audio = new Audio('data:audio/mp3;base64,' + data.audio_data);
+                    audio.play();
+                } else {
+                    throw new Error('Failed to synthesize speech');
+                }
+            } catch (error) {
+                console.error('Error playing audio:', error);
+            }
+        }
+
+        // Breathing exercise
+        function startBreathingExercise() {
+            const circle = document.getElementById('breathingCircle');
+            const instructions = document.getElementById('breathingInstructions');
+            const text = document.getElementById('breathingText');
+            
+            instructions.style.display = 'block';
+            
+            const phases = [
+                { text: 'Breathe in...', duration: 4000, scale: true },
+                { text: 'Hold...', duration: 4000, scale: false },
+                { text: 'Breathe out...', duration: 6000, scale: false },
+                { text: 'Rest...', duration: 2000, scale: false }
+            ];
+            
+            let phaseIndex = 0;
+            let cycleCount = 0;
+            const totalCycles = 5;
+            
+            function nextPhase() {
+                if (cycleCount >= totalCycles) {
+                    text.textContent = 'Exercise complete. How do you feel?';
+                    circle.classList.remove('active');
+                    return;
+                }
+                
+                const phase = phases[phaseIndex];
+                text.textContent = phase.text;
+                
+                if (phase.scale) {
+                    circle.classList.add('active');
+                } else {
+                    circle.classList.remove('active');
+                }
+                
+                setTimeout(() => {
+                    phaseIndex = (phaseIndex + 1) % phases.length;
+                    if (phaseIndex === 0) cycleCount++;
+                    nextPhase();
+                }, phase.duration);
+            }
+            
+            nextPhase();
+        }
+
+        // Accessibility functions
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
+        }
+
+        function toggleLargeText() {
+            document.body.classList.toggle('large-text');
+            localStorage.setItem('largeText', document.body.classList.contains('large-text'));
+        }
+
+        // Load accessibility preferences
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+        }
+        if (localStorage.getItem('largeText') === 'true') {
+            document.body.classList.add('large-text');
+        }
+
+        // Utility functions
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function getEmotionClass(emotion) {
+            const emotionMap = {
+                'anxiety': 'emotion-anxiety',
+                'panic': 'emotion-anxiety',
+                'sadness': 'emotion-sadness',
+                'depression': 'emotion-sadness',
+                'anger': 'emotion-anger',
+                'joy': 'emotion-joy',
+                'happiness': 'emotion-joy',
+                'love': 'emotion-joy'
+            };
+            return emotionMap[emotion] || 'emotion-neutral';
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (isRecording) {
+                stopRecording();
+            }
+        });
+    </script>
+</body>
+</html>
